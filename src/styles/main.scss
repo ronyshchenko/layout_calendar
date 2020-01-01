@@ -1,3 +1,69 @@
 body {
   margin: 0;
+  font-size: 35px;
+}
+
+.calendar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template: repeat(6, 100px) / repeat(7, 100px);
+  grid-gap: 2px;
+}
+
+.calendar > div {
+  justify-content: stretch;
+  background-color: rgb(238, 238, 238);
+  border: 1px solid black;
+}
+
+.calendar > div:hover {
+  background-color: rgb(245, 194, 203);
+  transform: translateY(-20px);
+  transition: all 0.5s ease;
+}
+
+.calendar-30 > :last-child {
+  display: none;
+}
+
+.calendar-29 > :last-child,
+.calendar-29 > :nth-child(30) {
+  display: none;
+}
+
+.calendar-28 > :last-child,
+.calendar-28 > :nth-child(30),
+.calendar-28 > :nth-child(29) {
+  display: none;
+}
+
+.calendar > div::after {
+  background-color: inherit;
+  position: absolute;
+  margin: 33px;
+}
+
+@for $i from 1 through 31 {
+  .calendar > div:nth-child(#{$i})::after {
+    content: "#{$i}";
+  }
+}
+
+$days: (
+  mon: 1,
+  tue: 2,
+  wed: 3,
+  thu: 4,
+  fri: 5,
+  sat: 6,
+  sun: 7
+);
+
+@each $day, $num in $days {
+  .calendar-#{$day} > :first-of-type {
+    grid-column-start: $num;
+  }
 }
